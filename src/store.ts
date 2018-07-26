@@ -15,19 +15,18 @@ export default new Vuex.Store<StateInterface>({
     },
   },
   mutations: {
-    modifyQuery({ query }, newQuery: QueryInterface) {
+    setQuery({ query }, newQuery: QueryInterface): void{
       query = newQuery;
     },
   },
   actions: {
-    getNews({ commit, state, getters }): void {
+    getNews({ commit, state, getters }): void{
        axios.get(`${state.apiUrl}/posts${getters.getParams}`)
-            .then((data) => console.log(data))
+            .then(({ data }) => console.log(data))
             .catch((err) => console.log(err));
     },
   },
   getters: {
-    getParams: (state) => Object.keys(state.query)
-    .reduce((paramStr: string, param: string) => paramStr += `${param}=${state.query[param]}&`, '?'),
+    getParams: state => Object.keys(state.query).reduce((paramStr: string, param: string) => paramStr += `${param}=${state.query[param]}&`, '?'),
   },
 });

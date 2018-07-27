@@ -4,5 +4,5 @@ import { NewsInterface } from '@/interfaces/news.interface';
 export interface StateInterface {
     apiUrl: string;
     news: NewsInterface[];
-    query: any;
+    query: QueryInterface;
 }

@@ -1,4 +1,5 @@
 export interface QueryInterface {
-    _limits: number;
+    _limit: number;
     _start: number;
+    [key: string]: number;
 }

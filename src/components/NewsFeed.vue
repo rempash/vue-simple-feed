@@ -15,6 +15,7 @@ import {Vue, Component} from 'vue-property-decorator';
 export default class NewsFeed extends Vue {
 
     public mounted() {
+        this.$store.dispatch('getComments');
         this.getNews();
     }
 

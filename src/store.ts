@@ -14,27 +14,40 @@ export default new Vuex.Store<StateInterface>({
       _limit: 15,
       _start: 0,
     },
+    comments: {}
   },
   mutations: {
-    setQuery(state, newQuery: QueryInterface): void{
+    setQuery(state, newQuery: QueryInterface): void {
       state.query = newQuery;
     },
+    setProp(state, { prop, value }){
+      state[prop] = value;
+    }
   },
   actions: {
-    getNews({ commit, state, getters }): void{
-      let news: NewsInterface[];
-       axios.get(`${state.apiUrl}/posts${getters.getQueryParams}`)
+    getComments({ commit, state }){
+      axios.get(`${state.apiUrl}/comments`)
+           .then(({ data }) => {
+             let comments: {[index: number]: any} = {};
+             data.forEach(comment => {
+               comments[comment.postId] ? comments[comment.postId].push(comment) : comments[comment.postId] = [comment];
+             })
+             commit({
+               type: 'setProp',
+               prop: 'comments',
+               value: comments
+             })
+           });
+    },
+    getNews({ commit, state, getters }): void {
+      axios.get(`${state.apiUrl}/posts${getters.getQueryParams}`)
             .then(({data}) => {
-              news = data;
-              return axios.get(`${state.apiUrl}/comments${getters.getQueryParams}`);
-            })
-            .then(({data}) => {
-                console.log(data, news);
+              console.log(data);
             })
             .catch((err) => console.log(err));
     },
   },
   getters: {
-    getQueryParams: state => Object.keys(state['query']).reduce((paramStr: string, param: string) => paramStr += `${param}=${state.query[param]}&`, '?'),
+    getQueryParams: (state) => Object.keys(state.query).reduce((paramStr: string, param: string) => paramStr += `${param}=${state.query[param]}&`, '?'),
   },
 });

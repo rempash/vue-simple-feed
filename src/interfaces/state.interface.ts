@@ -5,4 +5,8 @@ export interface StateInterface {
     apiUrl: string;
     news: NewsInterface[];
     query: QueryInterface;
+    comments: {
+        [index: string]: any
+    }
+    [index: string]: any;
 }

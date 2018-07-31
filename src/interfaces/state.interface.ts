@@ -1,12 +1,11 @@
-import { QueryInterface } from './query.interface';
-import { NewsInterface } from '@/interfaces/news.interface';
+import { QueryInterface } from '@/interfaces/query.interface';
+import { PostInterface } from '@/interfaces/post.interface';
+import { StepInterface } from '@/interfaces/step.interface';
 
 export interface StateInterface {
     apiUrl: string;
-    news: NewsInterface[];
+    posts: PostInterface[];
+    step: StepInterface;
     query: QueryInterface;
-    comments: {
-        [index: string]: any
-    }
     [index: string]: any;
 }

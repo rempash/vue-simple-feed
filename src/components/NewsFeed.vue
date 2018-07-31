@@ -1,34 +1,34 @@
 <template>
-    <div class="container" v-if="$store.state.news">
-        <div class="new" v-for="singleNew in $store.state.news" :key="singleNew.id">
-            <p> {{ singleNew.body }} </p>
-        </div>
+    <div v-if="$store.state.posts">
+        <SinglePostItem v-for="(singlePost, index) in $store.state.posts" 
+                :key="singlePost.id" 
+                :index="index" 
+                :singlePost="singlePost"
+                :options="{
+                    sliced: true
+                }"
+        ></SinglePostItem>
     </div>
 </template>
 
 <script lang="ts">
 import {Vue, Component} from 'vue-property-decorator';
+import SinglePostItem from './SinglePostItem.vue';
 
 @Component({
-
+    components: {
+        "SinglePostItem": SinglePostItem
+    }
 })
 export default class NewsFeed extends Vue {
 
-    public mounted() {
-        this.$store.dispatch('getComments');
-        this.getNews();
-    }
-
-    private getNews() {
-        this.$store.dispatch('getNews');
+    private getPosts() {
+        this.$store.dispatch('getPosts');
     }
 
 }
 </script>
 
 <style lang="scss">
-    .container{
-        max-width: 1100px;
-        margin: 0 auto;
-    }
+
 </style>

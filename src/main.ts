@@ -3,8 +3,11 @@ import App from './App.vue';
 import router from '@/router';
 import store from '@/store';
 import { filters } from '@/filters/filters';
+import { shim } from 'promise.prototype.finally';
 
 filters.forEach(filter => Vue.filter(filter.title, filter.method));
+
+shim();
 
 Vue.config.productionTip = false;
 

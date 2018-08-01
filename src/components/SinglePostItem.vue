@@ -1,12 +1,15 @@
 <template>
-   <div class="new" v-if="singlePost">
-            <div class="new-header">
+   <div class="post" v-if="singlePost">
+            <a class="back" v-if="!options.sliced" @click="goBack()">
+                <i class="fas fa-chevron-circle-left"></i>
+            </a>
+            <div class="post-header">
                 <span>{{ singlePost.title }}</span>
             </div>
-            <div class="new-body">
+            <div class="post-body">
                 <p> {{ newTitle }} </p>
             </div>
-            <div class="new-footer">
+            <div class="post-footer">
                 <span class="comments">Всего комментариев: {{ singlePost.comments.length }}</span>
                 <div class="rating"> 
                     Рейтинг: {{ singlePost.rating }} 
@@ -59,40 +62,14 @@ export default class SinglePostItem extends Vue {
             action: action
         });
     }
+
+    private goBack(){
+        this.$router.go(-1);
+    }
     
 }
 </script>
 
 <style lang="scss">
-   .post-comments{
-        padding: 0 10px 10px;
 
-        h4{
-            margin: 0 0 10px 0;
-        }
-
-        .comment{
-            margin-bottom: 20px;
-            background-color: #fff;
-            border: 1px solid transparent;
-            border-radius: 4px;
-            -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
-            box-shadow: 0 1px 1px rgba(0,0,0,.05);
-            border-color: #ddd;
-
-            .comment-header{
-                    padding: 10px 15px;
-                    border-bottom: 1px solid transparent;
-                    border-top-left-radius: 3px;
-                    border-top-right-radius: 3px;
-                    color: #333;
-                    background-color: #f5f5f5;
-                    border-color: #ddd;
-            }
-
-            .comment-body{
-                padding: 15px;
-            }
-        }
-   }
 </style>

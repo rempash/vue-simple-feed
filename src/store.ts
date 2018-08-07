@@ -38,7 +38,14 @@ export default new Vuex.Store<StateInterface>({
   actions: {
     getPosts({ commit, state, getters }, { action }: { action: string } = { action: 'concatArrayProp'}): void {
       EventBus.$emit('toggleBlockUi', true);
-      axios.get(`${state.apiUrl}/posts?_embed=comments&${getters.getQueryParams('step')}${getters.getQueryParams('query')}`)
+      axios.get(`${state.apiUrl}/posts`, )
+      axios.get(`${state.apiUrl}/posts`, {
+        params: {
+          _embed: 'comments',
+          ...state.step,
+          ...state.query
+        }
+        })
            .then(({ data }) => commit({
             type: action,
             prop: 'posts',
@@ -50,8 +57,5 @@ export default new Vuex.Store<StateInterface>({
            .catch(err => new Error(err))
            .finally(() => EventBus.$emit('toggleBlockUi', false));
     },
-  },
-  getters: {
-    getQueryParams: (state) => (prop: string): string => Object.keys(state[prop]).reduce((paramStr: string, param: string) => paramStr += state[prop][param] ? `${param}=${state[prop][param]}&` : '', ''),
   },
 });

@@ -14,7 +14,7 @@ export default new Router({
       component: NewsFeed,
     },
     {
-      path: '/post/:index',
+      path: '/post/:id',
       name: 'post',
       component: SinglePostPage,
     },

@@ -70,7 +70,10 @@ export default class NewsFilter extends Vue {
         this.$store.commit({
             type: 'setProp',
             prop: 'query',
-            value: this.query
+            value: Object.keys(this.query).reduce((prev, cur) => { 
+                if (this.query[cur]) prev[cur] = this.query[cur];
+                return prev;
+             }, {})
         });
         this.$store.dispatch({
             type: 'getPosts',

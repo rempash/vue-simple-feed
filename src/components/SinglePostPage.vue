@@ -1,8 +1,10 @@
 <template>
-   <div v-if="currentNew">
+   <div v-if="currentPost">
+       <a class="back" @click="goBack()">
+            <i class="fas fa-chevron-circle-left"></i>
+       </a>
        <SinglePostItem
-            :singlePost="currentNew"
-            :index="this.$route.params.index"
+            :post="currentPost"
             :options="{
                 sliced: false
             }"
@@ -17,15 +19,24 @@ import SinglePostItem from './SinglePostItem.vue';
 
 @Component({
     components: {
-        "SinglePostItem": SinglePostItem
+         SinglePostItem
     }
 })
 export default class SinglePostPage extends Vue {
 
-    private currentNew: PostInterface = null;
+    private currentPost: PostInterface = null;
 
     public mounted(){
-        this.currentNew = this.$store.state.posts[this.$route.params.index];
+        if (this.$store.getters.hasPosts > 0){
+            this.currentPost = this.$store.getters.getPostById(this.$route.params.id);
+        }else this.$store.dispatch({ 
+                type: 'getPostById', 
+                id: this.$route.params.id 
+            }).then(post => this.currentPost = post);
+    }
+
+    private goBack(){
+        this.$router.push({ name: 'home' });
     }
     
 }

@@ -1,11 +1,10 @@
 <template>
     <div>
         <NewsFilter></NewsFilter>
-        <div v-if="$store.state.posts.length > 0">
-            <SinglePostItem v-for="(singlePost, index) in $store.state.posts" 
-                    :key="singlePost.id + Math.random()" 
-                    :index="index" 
-                    :singlePost="singlePost"
+        <div v-if="$store.getters.hasPosts> 0">
+            <SinglePostItem v-for="post in $store.state.posts" 
+                    :key="post.id + Math.random()" 
+                    :post="post"
                     :options="{
                         sliced: true
                     }"
@@ -25,8 +24,8 @@ import { throttle } from '@/helpers/throttle';
 
 @Component({
     components: {
-        "SinglePostItem": SinglePostItem,
-        "NewsFilter": NewsFilter,
+         SinglePostItem,
+         NewsFilter,
     }
 })
 export default class NewsFeed extends Vue {

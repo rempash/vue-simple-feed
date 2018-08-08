@@ -5,6 +5,9 @@ import { StepInterface } from '@/interfaces/step.interface';
 export interface StateInterface {
     apiUrl: string;
     posts: PostInterface[];
+    postsHash: {
+        [index: number]: number
+    }
     step: StepInterface;
     query: QueryInterface;
     [index: string]: any;

@@ -2,6 +2,7 @@
    <div class="post" v-if="post">
             <div class="post-header">
                 <span>{{ post.title }}</span>
+                <div class="post-date">January 30, 2018</div>
             </div>
             <div class="post-body">
                 <p> {{ newTitle }} </p>
@@ -9,8 +10,9 @@
             <div class="post-footer">
                 <span class="comments">Всего комментариев: {{ post.comments.length }}</span>
                 <div class="rating"> 
-                    Рейтинг: {{ post.rating }} 
-                    <button @click="changePostRating(post.id, true)" >+</button><button @click="changePostRating(post.id, false)">-</button>
+                    Рейтинг: <b>{{ post.rating }}</b>
+                    <button class="rating__plus" @click="changeRating(post.id, true)" ><i class="fa fa-thumbs-up"></i></button>
+                    <button class="rating__minus" @click="changeRating(post.id, false)"><i class="fas fa-thumbs-down"></i></button>
                 </div>
                 <router-link v-if="options.sliced" :to="{ name: 'post', params: {id: post.id} }">Подробнее</router-link>
             </div>
@@ -31,30 +33,34 @@
 <script lang="ts">
 import { Component } from 'vue-property-decorator';
 import Vue from 'vue';
-import { PostInterface } from '@/interfaces/post.interface';
+import {PostInterface} from '@/interfaces/post.interface';
+import {newTitleLength} from '@/filters/newTitleLength.filter';
+import {Mutation} from 'vuex-class';
 
 @Component({
     props: {
         post: Object,
-        options: Object
-    }
+        options: Object,
+    },
 })
 export default class SinglePostItem extends Vue {
 
-     private post: PostInterface
-     private options: {
-         sliced: boolean
-     }
+    @Mutation private changePostRating;
 
-    get newTitle(){
-        return this.options.sliced ? this.$options.filters.newTitleLength(this.post.body) : this.post.body;
+     private post: PostInterface;
+
+     private options: {
+         sliced: boolean,
+     };
+
+    private get newTitle() {
+        return this.options.sliced ? newTitleLength(this.post.body) : this.post.body;
     }
 
-    private changePostRating(id: number, action: boolean){
-        this.$store.commit({
-            type: 'changePostRating',
-            id: id,
-            action: action
+    private changeRating(id: number, action: boolean) {
+        this.changePostRating({
+            id,
+            action,
         });
     }
 

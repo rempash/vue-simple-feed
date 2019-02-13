@@ -1,8 +1,8 @@
 import { newTitleLength } from '@/filters/newTitleLength.filter';
-
 export const filters = [
     {
         title: 'newTitleLength',
-        method: newTitleLength,
-    },
+        method: newTitleLength
+    }
 ];
+//# sourceMappingURL=filters.js.map

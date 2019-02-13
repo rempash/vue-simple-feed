@@ -8,7 +8,6 @@
 
 .post{
     background-color: #fff;
-    border: 1px solid #ddd;
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
     max-width: 700px;
@@ -19,10 +18,18 @@
     }
 
     .post-header{
-            padding: 10px 10px 0 10px;
+        padding: 10px 10px 0 10px;
+
+        .post-date {
+            font-size: 12px;
+            letter-spacing: .03rem;
+            text-transform: uppercase;
+            opacity: 0.7;
+            padding: 8px 5px;
+        }
 
         span{
-            font-size: 16px;
+            font-size: 20px;
             padding: 5px;
             font-weight: bold;
         }
@@ -41,6 +48,7 @@
         display: flex;
         justify-content: space-between;
         padding: 0 15px 10px;
+        align-items: center;
 
         & > span{
             flex-basis: 60%;
@@ -63,26 +71,41 @@
         }
 
         .rating{
-            flex-basis: 21%;
+            flex-basis: 25%;
 
             button{
-                padding: 0px 4px 9px 4px;
-                color: #fff;
-                border-radius: 50%;
+                background: none;
+                font-size: 12px;
+                opacity: 0.9;
                 font-weight: bold;
-                display: inline-block;
-                height: 22px;
+                border-radius: 50%;
+                border: 1px solid;
+                height: 28px;
                 text-align: center;
-                font-size: 16px;
                 outline: none;
                 cursor: pointer;
+                margin: 0 4px;
+                transition: 0.3s ease-in-out;
 
-                &:nth-of-type(1){
-                    background: #0c5460;
-                }      
-                &:nth-of-type(2){
-                    background: #721c24;
-                    margin-left: 3px;
+                &.rating__plus {
+                    color: #28a745;
+                    padding: 0 8px 2px 8px;
+
+                    &:hover {
+                        color: #fff;
+                        background: #28a745;
+                    }
+                }
+
+                &.rating__minus {
+                    color: #dc3545;
+                    padding: 1px 7px 0 8px;
+
+                    &:hover {
+                        color: #fff;
+                        background: #dc3545;
+                    }
+
                 }      
              }
         }
@@ -98,20 +121,18 @@
         .comment{
             margin-bottom: 20px;
             background-color: #fff;
-            border: 1px solid transparent;
+            border: 1px solid #ddd;
             border-radius: 4px;
             -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
             box-shadow: 0 1px 1px rgba(0,0,0,.05);
-            border-color: #ddd;
 
             .comment-header{
                     padding: 10px 15px;
-                    border-bottom: 1px solid transparent;
+                    border-bottom: 1px solid #ddd;
                     border-top-left-radius: 3px;
                     border-top-right-radius: 3px;
                     color: #333;
                     background-color: #f5f5f5;
-                    border-color: #ddd;
             }
 
             .comment-body{

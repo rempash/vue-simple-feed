@@ -20,67 +20,69 @@
 import {Vue, Component} from 'vue-property-decorator';
 import { QueryInterface } from '@/interfaces/query.interface';
 import { SimpleOptionInterface } from '@/interfaces/simpleOption.interface';
+import {Action, Mutation} from 'vuex-class';
 
-@Component({
-    
-})
+@Component
 export default class NewsFilter extends Vue {
+
+    @Mutation private makeStepStart;
+
+    @Mutation private setProp;
+
+    @Action private getPosts;
 
     private sortOptions: SimpleOptionInterface[] = [
         {
             title: 'Нет',
-            value: ''
+            value: '',
         },
         {
             title: 'Заголовки',
-            value: 'title'
+            value: 'title',
         },
         {
             title: 'Комментарии',
-            value: 'comments'
+            value: 'comments',
         },
     ];
-    
+
     private orderOptions: SimpleOptionInterface[] = [
          {
             title: 'Нет',
-            value: ''
+            value: '',
         },
         {
             title: 'Возрастанию',
-            value: 'asc'
+            value: 'asc',
         },
         {
             title: 'Убыванию',
-            value: 'desc'
+            value: 'desc',
         },
     ];
 
     private query: QueryInterface = {
         title_like: '',
         _sort: '',
-        _order: ''
+        _order: '',
     };
 
-    private setFilter(){
-        this.$store.commit({
-            type: 'makeStepStart',
-            isFiltered: true
+    private setFilter() {
+        this.makeStepStart({
+            isFiltered: true,
         });
-        this.$store.commit({
-            type: 'setProp',
+        this.setProp({
             prop: 'query',
-            value: Object.keys(this.query).reduce((prev, cur) => { 
-                if (this.query[cur]) prev[cur] = this.query[cur];
+            value: Object.keys(this.query).reduce((prev, cur) => {
+                if (this.query[cur]) { prev[cur] = this.query[cur]; }
                 return prev;
-             }, {})
+            }, {}),
         });
-        this.$store.dispatch({
-            type: 'getPosts',
-            action: 'setProp'
+        this.getPosts({
+            action: 'setProp',
         });
-    };
-    
+    }
+
 }
 </script>
 

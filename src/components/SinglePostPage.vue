@@ -16,29 +16,33 @@
 import {Vue, Component} from 'vue-property-decorator';
 import { PostInterface } from '@/interfaces/post.interface';
 import SinglePostItem from './SinglePostItem.vue';
+import {Action} from 'vuex-class';
 
 @Component({
     components: {
-         SinglePostItem
-    }
+         SinglePostItem,
+    },
 })
 export default class SinglePostPage extends Vue {
 
+    @Action private getPostById;
+
     private currentPost: PostInterface = null;
 
-    public mounted(){
-        if (this.$store.getters.hasPosts > 0){
-            this.currentPost = this.$store.getters.getPostById(this.$route.params.id);
-        }else this.$store.dispatch({ 
-                type: 'getPostById', 
-                id: this.$route.params.id 
-            }).then(post => this.currentPost = post);
+    public mounted() {
+        const id: string = this.$route.params.id;
+        if (this.$store.getters.hasPosts > 0) {
+            this.currentPost = this.$store.getters.getPostById(id);
+        } else { this.getPostById({
+                id,
+            }).then((post) => this.currentPost = post);
+        }
     }
 
-    private goBack(){
+    private goBack() {
         this.$router.push({ name: 'home' });
     }
-    
+
 }
 </script>
 

@@ -8,29 +8,25 @@
 
 <script lang="ts">
 import {Vue, Component} from 'vue-property-decorator';
-import { setTimeout } from 'timers';
-import { PostInterface } from '@/interfaces/post.interface';
 import { EventBus } from './event-bus';
+import {Action} from 'vuex-class';
 
-@Component({
-
-})
+@Component
 export default class App extends Vue {
 
-    private blockUi: boolean = false;
+  @Action private getPosts;
 
-    public created(){
+  private blockUi: boolean = false;
+
+  public created() {
         EventBus.$on('toggleBlockUi', (action: boolean) => this.toggleBlockUi(action));
+        this.getPosts();
+  }
 
-        this.$store.dispatch('getPosts');
+  private toggleBlockUi(action: boolean) {
+    this.blockUi = action;
+  }
 
-    }
-
-    private toggleBlockUi(action: boolean){
-      this.blockUi = action;
-    }
-
-    
 }
 </script>
 

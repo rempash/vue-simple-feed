@@ -1,10 +1,11 @@
-export const throttle = (fn, interval: number) => {
+export const throttle = (fn, interval) => {
     let lastTime;
     return function throttled() {
-        const timeSinceLastExecution = Date.now() - lastTime;
+        let timeSinceLastExecution = Date.now() - lastTime;
         if (!lastTime || (timeSinceLastExecution >= interval)) {
             fn.apply(this, arguments);
             lastTime = Date.now();
         }
     };
 };
+//# sourceMappingURL=throttle.js.map

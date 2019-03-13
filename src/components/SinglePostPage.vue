@@ -43,6 +43,7 @@ export default class SinglePostPage extends Vue {
         this.$router.push({ name: 'home' });
     }
 
+
 }
 </script>
 
